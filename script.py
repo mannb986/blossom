@@ -1,4 +1,5 @@
 from linked_list import Node, LinkedList
+from blossom_lib import flower_definitions
 
 class HashMap:
     def __init__(self, size):
@@ -22,30 +23,29 @@ class HashMap:
         list_at_array = self.array[array_index]
 
         for item in list_at_array:
-            if item[0] == key:
+            if key == item[0]:
                 item[1] = value
                 return
 
         list_at_array.insert(payload)
-        
+
         return
 
 #Function that allows you to retrieve the value based on your key
     def retrieve(self, key):
         array_index = self.compress(self.hash(key))
-        payload = self.array[array_index]
+        list_at_index = self.array[array_index]
 
-#Conditional statements to check the value that is stored at the relevant index based on the key
-        if payload[0] == key:
-            return payload[1]
+        for item in list_at_index:
+            if key == item[0]:
+                return item[1]
         
-        if payload == None:
-            return None
-        
+        return None
 
+blossom = HashMap(len(flower_definitions))
 
+for flower in flower_definitions:
+    blossom.assign(flower[0], flower[1])
 
-
-# new_class = HashMap(6)
-# new_class.assign('brian', 'orla')
-# print(new_class.retrieve('brian'))
+print(blossom.retrieve('daisy'))
+print(blossom.retrieve('tulip'))
