@@ -1,7 +1,9 @@
-class HashMap():
+from linked_list import Node, LinkedList
+
+class HashMap:
     def __init__(self, size):
         self.array_size = size
-        self.array = [None for item in range(size)]
+        self.array = [LinkedList() for i in range(self.array_size)]
 
 #Converting key into a hash value
     def hash(self, key):
@@ -16,7 +18,16 @@ class HashMap():
 #Assign function that allows you to assign you key, value pair to the array
     def assign(self, key, value):
         array_index = self.compress(self.hash(key))
-        self.array[array_index] = [key, value]
+        payload = Node([key, value])
+        list_at_array = self.array[array_index]
+
+        for item in list_at_array:
+            if item[0] == key:
+                item[1] = value
+                return
+
+        list_at_array.insert(payload)
+        
         return
 
 #Function that allows you to retrieve the value based on your key
